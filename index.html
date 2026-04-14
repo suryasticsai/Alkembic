@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Alkembic — Product Concept Document</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0d0f0e;
+    --surface: #131715;
+    --surface2: #1a1f1c;
+    --border: #2a3028;
+    --gold: #c9a84c;
+    --gold-dim: #7a6230;
+    --gold-glow: rgba(201,168,76,0.15);
+    --green: #4caf82;
+    --green-dim: #2d6b50;
+    --text: #d4cfc4;
+    --text-dim: #7a7670;
+    --text-bright: #ede8dc;
+    --accent: #8fb89a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* Alchemical background texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 10% 20%, rgba(201,168,76,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 90% 80%, rgba(76,175,130,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    padding: 4rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4rem;
+    position: relative;
+  }
+
+  .symbol {
+    font-size: 2rem;
+    letter-spacing: 0.4em;
+    color: var(--gold-dim);
+    font-family: 'Cinzel', serif;
+    margin-bottom: 1.5rem;
+    opacity: 0.6;
+  }
+
+  header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+
+  header .sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  header .tagline {
+    font-size: 1.05rem;
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 300;
+    max-width: 520px;
+  }
+
+  .divider-rune {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 5rem;
+    color: var(--gold-dim);
+    opacity: 0.12;
+    font-family: 'Cinzel', serif;
+    user-select: none;
+  }
+
+  /* ─── SECTION ─── */
+  section {
+    margin-bottom: 3.5rem;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--gold-dim), transparent);
+    max-width: 200px;
+  }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-bright);
+    margin-bottom: 1.2rem;
+  }
+
+  h3 {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--green);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 1.6rem 0 0.6rem;
+    font-family: 'DM Mono', monospace;
+  }
+
+  p {
+    color: var(--text);
+    margin-bottom: 1rem;
+    max-width: 680px;
+  }
+
+  /* ─── CALLOUT ─── */
+  .callout {
+    background: var(--gold-glow);
+    border-left: 2px solid var(--gold);
+    padding: 1rem 1.4rem;
+    margin: 1.5rem 0;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .callout p {
+    color: var(--text-bright);
+    margin: 0;
+    font-style: italic;
+  }
+
+  /* ─── TABLE ─── */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 1.2rem 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+
+  thead tr {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--gold-dim);
+  }
+
+  thead th {
+    padding: 0.7rem 1rem;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+
+  tbody tr:hover {
+    background: var(--surface);
+  }
+
+  tbody td {
+    padding: 0.65rem 1rem;
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  tbody td:first-child {
+    color: var(--text-bright);
+    font-weight: 500;
+    white-space: nowrap;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.82rem;
+  }
+
+  /* ─── CODE / FLOW ─── */
+  pre {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.4rem 1.6rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--accent);
+    overflow-x: auto;
+    line-height: 1.8;
+    margin: 1.2rem 0;
+  }
+
+  pre .arrow { color: var(--gold-dim); }
+  pre .label { color: var(--green); font-weight: 500; }
+  pre .bracket { color: var(--gold); }
+  pre .dim { color: var(--text-dim); }
+
+  /* ─── PHASE CARDS ─── */
+  .phases {
+    display: grid;
+    gap: 1rem;
+    margin: 1.2rem 0;
+  }
+
+  .phase {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.2rem 1.4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .phase::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+  }
+
+  .phase-1::before { background: var(--gold); }
+  .phase-2::before { background: var(--green); }
+  .phase-3::before { background: var(--accent); }
+
+  .phase-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.3rem;
+  }
+
+  .phase h3 {
+    margin: 0 0 0.8rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.95rem;
+    text-transform: none;
+    letter-spacing: 0.02em;
+    color: var(--text-bright);
+  }
+
+  .phase ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .phase ul li {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ─── CONSTRAINTS ─── */
+  .constraint {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .constraint-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .constraint-tag {
+    background: rgba(201,168,76,0.1);
+    border: 1px solid var(--gold-dim);
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    white-space: nowrap;
+    margin-top: 0.1rem;
+  }
+
+  .constraint-title {
+    color: var(--text-bright);
+    font-weight: 500;
+    font-size: 0.92rem;
+  }
+
+  .constraint-decision {
+    font-size: 0.88rem;
+    color: var(--text);
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .decision-label {
+    color: var(--green);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.3rem;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding-top: 2rem;
+    margin-top: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: gap;
+    gap: 1rem;
+  }
+
+  footer .brand {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+  }
+
+  footer .meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  header { animation: fadeUp 0.6s ease both; }
+  section:nth-child(1) { animation: fadeUp 0.6s 0.1s ease both; }
+  section:nth-child(2) { animation: fadeUp 0.6s 0.15s ease both; }
+  section:nth-child(3) { animation: fadeUp 0.6s 0.2s ease both; }
+  section:nth-child(4) { animation: fadeUp 0.6s 0.25s ease both; }
+  section:nth-child(5) { animation: fadeUp 0.6s 0.3s ease both; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="symbol">⚗ ◈ ⚗</div>
+    <h1>Alkembic</h1>
+    <div class="sub">Product Concept Document &nbsp;·&nbsp; Version 0.1 &nbsp;·&nbsp; Internal Use</div>
+    <p class="tagline">Distilling raw knowledge into structured insight — offline, private, yours.</p>
+    <div class="divider-rune">⚗</div>
+  </header>
+
+  <!-- 1. PROBLEM STATEMENT -->
+  <section>
+    <div class="section-label">01 &nbsp; Problem Statement</div>
+    <h2>The Fragmented Knowledge Problem</h2>
+
+    <p>Scrum Masters and delivery leads operate across a fragmented information landscape. Critical knowledge — decisions made in ceremonies, blockers raised in standups, action items from retrospectives, planning notes from PI sessions — ends up scattered across Confluence pages, Slack threads, Teams transcripts, Excel trackers, and SharePoint folders.</p>
+
+    <p>There is no single place to ask: <em>"What did we decide about this last sprint?"</em> or <em>"What recurring blockers has this team raised?"</em></p>
+
+    <p>The result is knowledge loss, repeated discussions, and heavy reliance on individual memory rather than team institutional knowledge.</p>
+
+    <div class="callout">
+      <p>Alkembic solves this by acting as a personal data distillation layer — a lightweight tool that ingests raw inputs from these sources, structures them into typed artifacts, and makes them queryable through a fast offline search interface. No cloud AI dependency. No external API calls. Fully functional inside locked client environments.</p>
+    </div>
+  </section>
+
+  <!-- 2. ARCHITECTURE -->
+  <section>
+    <div class="section-label">02 &nbsp; Architecture & Tech Stack</div>
+    <h2>How Alkembic is Built</h2>
+
+    <p>Alkembic is a fully client-side JavaScript application with no backend server requirement. All processing, storage, and search happens in the browser or local Node environment.</p>
+
+    <h3>Core Layers</h3>
+
+    <p><strong style="color:var(--text-bright)">Ingestion Layer</strong> — Accepts raw input via paste, file upload (CSV, JSON, TXT), or manual form entry. User adds minimal context: a title, data type, and short description. The content is parsed and normalized before storage.</p>
+
+    <p><strong style="color:var(--text-bright)">Artifact Storage</strong> — Each entry is saved as a structured artifact object containing Title, Description, Data Type, Raw Content, Tags, Labels, and Timestamp. Stored in IndexedDB for persistence across sessions without a backend.</p>
+
+    <p><strong style="color:var(--text-bright)">Search & Indexing</strong> — Two-tier search approach. Lunr.js handles keyword and boolean search across artifact fields. Transformers.js (all-MiniLM-L6-v2 via ONNX) handles semantic similarity search when the environment permits the one-time model download.</p>
+
+    <p><strong style="color:var(--text-bright)">Query Output Layer</strong> — Search results are rendered as ranked bullet points or structured tables. No text generation — output is retrieved and ranked artifacts in a readable format.</p>
+
+    <h3>Tech Stack</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Layer</th>
+            <th>Library / Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>UI Framework</td><td>Vanilla JS or lightweight React</td><td>Interface rendering, state management</td></tr>
+          <tr><td>Full-Text Search</td><td>Lunr.js / MiniSearch</td><td>Keyword + boolean search across artifacts</td></tr>
+          <tr><td>Semantic Search</td><td>Transformers.js (HuggingFace ONNX)</td><td>Sentence embeddings for similarity search</td></tr>
+          <tr><td>Local Storage</td><td>IndexedDB (via idb wrapper)</td><td>Persistent artifact + vector storage</td></tr>
+          <tr><td>File Parsing</td><td>Papa Parse, native JSON, plain text</td><td>CSV, JSON, TXT ingestion</td></tr>
+          <tr><td>Fuzzy Matching</td><td>Fuse.js</td><td>Typo-tolerant search fallback</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 3. ROADMAP -->
+  <section>
+    <div class="section-label">03 &nbsp; Phased Roadmap</div>
+    <h2>Three Phases of Development</h2>
+
+    <div class="phases">
+      <div class="phase phase-1">
+        <div class="phase-num">Phase 01</div>
+        <h3>Data Capture — Alkembic Core</h3>
+        <p style="font-size:0.88rem;color:var(--text);margin-bottom:0.8rem;">Reliable ingestion and structured storage of raw SM artifacts.</p>
+        <ul>
+          <li>Paste interface</li>
+          <li>Title + Tags + Data Type form</li>
+          <li>TXT / JSON / CSV / TABLE support</li>
+          <li>Preview before save</li>
+          <li>IndexedDB persistence</li>
+          <li>Keyword search via Lunr.js</li>
+          <li>Export all as JSON</li>
+        </ul>
+      </div>
+
+      <div class="phase phase-2">
+        <div class="phase-num">Phase 02</div>
+        <h3>Search & Retrieval — Query Layer</h3>
+        <p style="font-size:0.88rem;color:var(--text);margin-bottom:0.8rem;">Make stored artifacts queryable in a useful way.</p>
+        <ul>
+          <li>Field-boosted full-text search</li>
+          <li>Tag-based filtering</li>
+          <li>Date range filtering</li>
+          <li>Fuzzy search for typos</li>
+          <li>Bullet / table result views</li>
+          <li>Semantic search (optional)</li>
+        </ul>
+      </div>
+
+      <div class="phase phase-3">
+        <div class="phase-num">Phase 03</div>
+        <h3>Insight Layer — Patterns & Trends</h3>
+        <p style="font-size:0.88rem;color:var(--text);margin-bottom:0.8rem;">Surface patterns and summaries from accumulated artifacts.</p>
+        <ul>
+          <li>Keyword frequency analysis</li>
+          <li>Sprint / week timeline view</li>
+          <li>Tag cloud + trend view</li>
+          <li>Rule-based summarization</li>
+          <li>Export filtered results (CSV / report)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. DATA FLOW -->
+  <section>
+    <div class="section-label">04 &nbsp; Data Flow / Wireflow</div>
+    <h2>How Data Moves Through Alkembic</h2>
+
+    <h3>Ingestion Flow</h3>
+    <pre><span class="dim">User Input</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="bracket">[ Paste / Upload / Type Raw Content ]</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="bracket">[ Add Context: Title → Data Type → Tags → Description ]</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="bracket">[ Preview Parsed Structure ]</span>
+    <span class="arrow">│</span>
+    <span class="arrow">├── Looks good ──▶</span> <span class="label">[ Save Artifact ]</span>
+    <span class="arrow">│</span>                        <span class="arrow">│</span>
+    <span class="arrow">│</span>                        <span class="arrow">▼</span>
+    <span class="arrow">│</span>               <span class="label">[ IndexedDB Storage ]</span>
+    <span class="arrow">│</span>                        <span class="arrow">│</span>
+    <span class="arrow">│</span>            <span class="arrow">┌───────────┴────────────┐</span>
+    <span class="arrow">│</span>            <span class="arrow">▼</span>                        <span class="arrow">▼</span>
+    <span class="arrow">│</span>   <span class="label">[ Lunr.js Index ]</span>     <span class="label">[ Transformers.js Vector ]</span>
+    <span class="arrow">│</span>
+    <span class="arrow">└── Needs edit ──▶</span> <span class="dim">[ Back to Form ]</span></pre>
+
+    <h3>Query Flow</h3>
+    <pre><span class="dim">User Query</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="bracket">[ Search Box — keyword or natural phrase ]</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="bracket">[ Lunr.js keyword match + optional vector similarity score ]</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="label">[ Ranked Artifact Results ]</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="bracket">[ Display: Bullet Points / Table / Expanded Card View ]</span></pre>
+  </section>
+
+  <!-- 5. CONSTRAINTS -->
+  <section>
+    <div class="section-label">05 &nbsp; Offline Constraints & Decisions</div>
+    <h2>Design Decisions Under Constraints</h2>
+
+    <div class="constraint">
+      <div class="constraint-header">
+        <span class="constraint-tag">Constraint</span>
+        <span class="constraint-title">No external AI APIs in client environment</span>
+      </div>
+      <div class="decision-label">Decision</div>
+      <p class="constraint-decision">All intelligence is local. Generative responses — summaries, rewrites — are out of scope. The tool provides structured retrieval, not generation. This is sufficient for the primary SM use case: finding what was said, not paraphrasing it.</p>
+    </div>
+
+    <div class="constraint">
+      <div class="constraint-header">
+        <span class="constraint-tag">Constraint</span>
+        <span class="constraint-title">No backend server permitted</span>
+      </div>
+      <div class="decision-label">Decision</div>
+      <p class="constraint-decision">IndexedDB is the persistence layer. All artifacts live in the browser. An export-to-JSON feature ensures data is never trapped. If a Node or Electron wrapper is permitted in a future phase, SQLite can replace IndexedDB with minimal code change.</p>
+    </div>
+
+    <div class="constraint">
+      <div class="constraint-header">
+        <span class="constraint-tag">Constraint</span>
+        <span class="constraint-title">Transformers.js model requires one-time download (~23MB)</span>
+      </div>
+      <div class="decision-label">Decision</div>
+      <p class="constraint-decision">Semantic search is treated as an optional enhancement. Phase 1 and 2 work entirely without it using Lunr.js. If the environment permits the model fetch, it is cached locally via the browser Cache API and never re-downloaded. If not permitted, fuzzy keyword search via MiniSearch covers most retrieval needs adequately.</p>
+    </div>
+
+    <div class="constraint">
+      <div class="constraint-header">
+        <span class="constraint-tag">Constraint</span>
+        <span class="constraint-title">No live access to Confluence, Slack, or SharePoint APIs</span>
+      </div>
+      <div class="decision-label">Decision</div>
+      <p class="constraint-decision">Alkembic is copy-paste and file-upload first. Users export content from those tools manually and paste into Alkembic. This is intentional — it keeps the tool dependency-free and works in any environment. Automated connectors can be added in a future phase if API access is ever granted.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="brand">⚗ Alkembic</div>
+    <div class="meta">v0.1 &nbsp;·&nbsp; Internal Use &nbsp;·&nbsp; Distilling raw knowledge into structured insight</div>
+  </footer>
+
+</div>
+</body>
+</html>
