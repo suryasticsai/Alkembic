@@ -1,4 +1,3 @@
-
 This is SMart utility tool for Scrum Master who automate mundane activities 
 you can access : https://alkembic.netlify.app 
 short-url : https://cutt.ly/Alkembic 
